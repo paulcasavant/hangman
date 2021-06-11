@@ -6,23 +6,13 @@
 
 #IncludeRegexTransform: 
 
-/Users/paulcasavant/repos/hangman/Game.cpp
-Game.h
-/Users/paulcasavant/repos/hangman/Game.h
-fstream
--
-iostream
--
-string
--
-
-/Users/paulcasavant/repos/hangman/Game.h
-string
--
-
 /Users/paulcasavant/repos/hangman/main.cpp
 iostream
 -
-Game.h
-/Users/paulcasavant/repos/hangman/Game.h
+fstream
+-
+string
+-
+random
+-
 

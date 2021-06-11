@@ -4,15 +4,14 @@
 #include <string>
 #include <fstream>
 
-class Game
-{
- public:
-  static std::string getWord();
- private:
-  std::string word;
-  ifstream inFile;
-};
+using namespace std;
 
 const static char* wordPath = "wordlist.txt";
+
+class Game
+{
+
+};
+
 
 #endif //HANGMAN__GAME_H_

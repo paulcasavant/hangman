@@ -7,6 +7,5 @@ CMakeFiles/hangman.dir/Game.cpp.o: ../Game.h
 CMakeFiles/hangman.dir/Man.cpp.o: ../Man.cpp
 CMakeFiles/hangman.dir/Man.cpp.o: ../Man.h
 
-CMakeFiles/hangman.dir/main.cpp.o: ../Game.h
 CMakeFiles/hangman.dir/main.cpp.o: ../main.cpp
 
