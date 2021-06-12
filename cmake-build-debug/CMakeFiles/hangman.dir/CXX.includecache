@@ -18,15 +18,3 @@ iostream
 vector
 -
 
-/Users/paulcasavant/repos/hangman/main.cpp
-iostream
--
-fstream
--
-string
--
-random
--
-Body.h
-/Users/paulcasavant/repos/hangman/Body.h
-
