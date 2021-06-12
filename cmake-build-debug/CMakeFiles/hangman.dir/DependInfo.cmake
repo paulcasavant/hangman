@@ -4,8 +4,8 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
+  "/Users/paulcasavant/repos/hangman/Body.cpp" "/Users/paulcasavant/repos/hangman/cmake-build-debug/CMakeFiles/hangman.dir/Body.cpp.o"
   "/Users/paulcasavant/repos/hangman/Game.cpp" "/Users/paulcasavant/repos/hangman/cmake-build-debug/CMakeFiles/hangman.dir/Game.cpp.o"
-  "/Users/paulcasavant/repos/hangman/Man.cpp" "/Users/paulcasavant/repos/hangman/cmake-build-debug/CMakeFiles/hangman.dir/Man.cpp.o"
   "/Users/paulcasavant/repos/hangman/main.cpp" "/Users/paulcasavant/repos/hangman/cmake-build-debug/CMakeFiles/hangman.dir/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "AppleClang")

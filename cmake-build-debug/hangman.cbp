@@ -80,16 +80,16 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/Users/paulcasavant/repos/hangman/Body.cpp">
+			<Option target="hangman"/>
+		</Unit>
+		<Unit filename="/Users/paulcasavant/repos/hangman/Body.h">
+			<Option target="hangman"/>
+		</Unit>
 		<Unit filename="/Users/paulcasavant/repos/hangman/Game.cpp">
 			<Option target="hangman"/>
 		</Unit>
 		<Unit filename="/Users/paulcasavant/repos/hangman/Game.h">
-			<Option target="hangman"/>
-		</Unit>
-		<Unit filename="/Users/paulcasavant/repos/hangman/Man.cpp">
-			<Option target="hangman"/>
-		</Unit>
-		<Unit filename="/Users/paulcasavant/repos/hangman/Man.h">
 			<Option target="hangman"/>
 		</Unit>
 		<Unit filename="/Users/paulcasavant/repos/hangman/main.cpp">

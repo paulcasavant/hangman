@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/hangman.dir/Body.cpp.o"
   "CMakeFiles/hangman.dir/Game.cpp.o"
-  "CMakeFiles/hangman.dir/Man.cpp.o"
   "CMakeFiles/hangman.dir/main.cpp.o"
   "hangman"
   "hangman.pdb"

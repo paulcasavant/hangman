@@ -143,6 +143,33 @@ hangman/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/hangman.dir/build.make CMakeFiles/hangman.dir/build
 .PHONY : hangman/fast
 
+Body.o: Body.cpp.o
+
+.PHONY : Body.o
+
+# target to build an object file
+Body.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/hangman.dir/build.make CMakeFiles/hangman.dir/Body.cpp.o
+.PHONY : Body.cpp.o
+
+Body.i: Body.cpp.i
+
+.PHONY : Body.i
+
+# target to preprocess a source file
+Body.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/hangman.dir/build.make CMakeFiles/hangman.dir/Body.cpp.i
+.PHONY : Body.cpp.i
+
+Body.s: Body.cpp.s
+
+.PHONY : Body.s
+
+# target to generate assembly for a file
+Body.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/hangman.dir/build.make CMakeFiles/hangman.dir/Body.cpp.s
+.PHONY : Body.cpp.s
+
 Game.o: Game.cpp.o
 
 .PHONY : Game.o
@@ -169,33 +196,6 @@ Game.s: Game.cpp.s
 Game.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/hangman.dir/build.make CMakeFiles/hangman.dir/Game.cpp.s
 .PHONY : Game.cpp.s
-
-Man.o: Man.cpp.o
-
-.PHONY : Man.o
-
-# target to build an object file
-Man.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/hangman.dir/build.make CMakeFiles/hangman.dir/Man.cpp.o
-.PHONY : Man.cpp.o
-
-Man.i: Man.cpp.i
-
-.PHONY : Man.i
-
-# target to preprocess a source file
-Man.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/hangman.dir/build.make CMakeFiles/hangman.dir/Man.cpp.i
-.PHONY : Man.cpp.i
-
-Man.s: Man.cpp.s
-
-.PHONY : Man.s
-
-# target to generate assembly for a file
-Man.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/hangman.dir/build.make CMakeFiles/hangman.dir/Man.cpp.s
-.PHONY : Man.cpp.s
 
 main.o: main.cpp.o
 
@@ -233,12 +233,12 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... hangman"
+	@echo "... Body.o"
+	@echo "... Body.i"
+	@echo "... Body.s"
 	@echo "... Game.o"
 	@echo "... Game.i"
 	@echo "... Game.s"
-	@echo "... Man.o"
-	@echo "... Man.i"
-	@echo "... Man.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

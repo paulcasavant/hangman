@@ -3,4 +3,4 @@ project(hangman)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(hangman main.cpp Man.cpp Man.h Game.cpp Game.h)
+add_executable(hangman main.cpp Body.cpp Body.h Game.cpp Game.h)
