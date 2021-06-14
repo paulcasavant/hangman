@@ -1,3 +1,6 @@
+/**
+ * This class represents the body in a game of Hangman.
+ */
 #ifndef HANGMAN__BODY_H_
 #define HANGMAN__BODY_H_
 
@@ -7,27 +10,42 @@
 
 using namespace std;
 
+int MAX_PARTS = 6;
+int NO_PARTS = 0;
+
+
 class Body
 {
- public:
+ private:
+  int _numParts;
+  bool _hasParts;
 
+ public:
   /**
-   * Constructs a man object.
+   * Constructs a new Body.
    */
   Body();
 
   /*
-   * Deconstructs a man object.
+   * Deconstructs a Body.
    */
   virtual ~Body();
 
   /*
-   * Removes an appendage from the body.
-   *
-   * @return true if there was still a part available to remove.
+   * Removes an appendage from the body if there is one to remove.
    */
-  bool removePart() const;
+  void removePart() ;
 
+  /**
+   * Returns true if this Body is deceased. This means there are no parts left
+   * @return
+   */
+  bool isDead();
+
+  /**
+   * Prints out a visual depiction of this Body reflecting the number of
+   * parts it has currently.
+   */
   void display();
 };
 
