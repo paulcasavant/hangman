@@ -6,6 +6,14 @@
 
 #IncludeRegexTransform: 
 
+/Users/paulcasavant/repos/hangman/Body.h
+string
+-
+iostream
+-
+vector
+-
+
 /Users/paulcasavant/repos/hangman/Game.cpp
 Game.h
 /Users/paulcasavant/repos/hangman/Game.h
@@ -19,10 +27,6 @@ iostream
 -
 vector
 -
-
-/Users/paulcasavant/repos/hangman/main.cpp
-iostream
--
-Game.h
-/Users/paulcasavant/repos/hangman/Game.h
+Body.h
+/Users/paulcasavant/repos/hangman/Body.h
 

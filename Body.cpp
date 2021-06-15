@@ -21,7 +21,7 @@ bool Body::isDead()
     return !_hasParts;
 }
 
-void Body::display()
+string Body::getASCII()
 {
     string ascii;
 
@@ -138,5 +138,5 @@ void Body::display()
             break;
     }
 
-    cout << ascii << endl;
+    return ascii;
 }

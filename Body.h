@@ -1,6 +1,3 @@
-/**
- * This class represents the body in a game of Hangman.
- */
 #ifndef HANGMAN__BODY_H_
 #define HANGMAN__BODY_H_
 
@@ -10,10 +7,12 @@
 
 using namespace std;
 
-int MAX_PARTS = 6;
-int NO_PARTS = 0;
+static int MAX_PARTS = 6;
+static int NO_PARTS = 0;
 
-
+/**
+ * This class represents the body in a game of Hangman.
+ */
 class Body
 {
  private:
@@ -43,10 +42,10 @@ class Body
   bool isDead();
 
   /**
-   * Prints out a visual depiction of this Body reflecting the number of
-   * parts it has currently.
+   * Returns a visual depiction of this Body as a string accurately reflecting
+   * the number of parts it has currently.
    */
-  void display();
+  string getASCII();
 };
 
 #endif //HANGMAN__BODY_H_
