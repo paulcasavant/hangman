@@ -1869,7 +1869,7 @@ dispersal
 dispersed
 disperser
 displace
-getASCII
+displayASCII
 displease
 disposal
 dispose

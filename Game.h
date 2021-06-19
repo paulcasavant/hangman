@@ -8,6 +8,7 @@
 #include <fstream>
 #include <iostream>
 #include <vector>
+#include <unordered_set>
 #include "Body.h"
 
 using namespace std;
@@ -20,9 +21,12 @@ static const string FILE_PATH = "/Users/paulcasavant/repos/hangman/wordlist.txt"
 class Game
 {
  private:
-  vector<string> _dict;
-  string _currentWord;
   Body *_theBody;
+  string _currentWord;
+  bool _victory;
+  vector<string> _dict;
+  vector<bool> _guessed; // Parallel to word string; tracks guessed indices
+  unordered_set<char> _attempted; // Records all attempted character guesses
 
  public:
   /**
@@ -44,7 +48,7 @@ class Game
    * Returns a random word from given dictionary and sets it as the current
    * word.
    */
-  void randomWord();
+  void randomizeWord();
 
   /**
    * Returns the current word.
@@ -53,12 +57,49 @@ class Game
    */
   string getCurrentWord();
 
-  bool makeMove(string word);
+  /**
+   * Checks the specified character against the word and updates the guessed
+   * vector where any matches are found.
+   *
+   * @param input the specified character
+   * @return true if the guess has not been previously attempted
+   */
+  bool guess(char input);
+
+  // todo: need this?
+  /**
+   * True if this Game has been won.
+   *
+   * @return true if the game has been won
+   */
+  bool victory();
+
+  /**
+   * True if this Game has been lost.
+   *
+   * @return true if the game has been lost
+   */
+   bool loss();
+
+   /**
+    * Returns the condition of the body as an integer.
+    *
+    * @return the condition of the body as an integer.
+    */
+   int condition();
 
   void restartGame();
 
   /**
-   * Display the current state of the game.
+   * Displays a visual representation of the body.
+   */
+  void displayBody();
+
+  /**
+   * Displays the current state of the letter blanks as well as messages
+   * about the game status.
+   *
+   * If a blanks is not printed, win condition flag is set TRUE.
    */
   void displayState();
 

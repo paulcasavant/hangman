@@ -1,8 +1,11 @@
 #include <iostream>
 #include <string>
+#include <regex>
 #include "Game.h"
 
 using namespace std;
+
+enum STATES { START, PLAY, RESTART, QUIT};
 
 static string ONE = "1";
 static string TWO = "2";
@@ -12,30 +15,75 @@ static string TWO = "2";
  */
 int main()
 {
-    string input;
-    bool quit = false;
-    Game *theGame = new Game(); // Create a new game
+    string buffer; // Buffer for user input
+    bool quit = false; // Set to keep running initially
+    Game *theGame = new Game(); // Init the game
+    int state = START;
 
-    theGame->displayTitle(); // Display the title screen of the game
+    //theGame->displayTitle(); // Display the title screen of the game
 
     while (!quit)
     {
-        cin >> input;
 
-        if (input == ONE)
-        {
-            quit = true;
-        }
-        else if (input == TWO)
-        {
+        theGame->displayBody();
+        theGame->displayState();
+        cout << "Guess: ";
+        cin >> buffer;
 
+        if (!regex_match (buffer, regex("[A-Za-z1-2]")))
+        {
+            cout << "Error: Invalid input." << endl;
         }
         else
         {
-            cout << input << endl;
+            // Restart the game
+            if (buffer == ONE)
+            {
+                theGame->restartGame();
+                cout << "You have started a new game." << endl;
+            }
+            // Quit the game
+            else if (buffer == TWO)
+            {
+                quit = true;
+                cout << "Thanks for playing!" << endl;
+            }
+            // Play the game
+            else
+            {
+                // If the guess has been previously attempted, print a message
+                if (!theGame->guess(buffer[0]))
+                {
+                    cout << "You already guessed that. Try again!" << endl;
+                }
+                else
+                {
+                    if (theGame->victory() || theGame->loss())
+                    {
+                        // If the game has been won, print a victory message
+                        if (theGame->victory())
+                        {
+                            cout << "Congratulations! You have won." << endl;
+                        }
+                            // If the game has been lost, print a loss message
+                        else if (theGame->loss())
+                        {
+                            cout << "The prisoner has died. Play again!" << endl;
+                            theGame->displayBody();
+                        }
+
+                        cout << "1: Restart\n"
+                                "2: Quit." << endl;
+                    }
+                    else
+                    {
+                        cout << "The prisoner has "
+                             << theGame->condition() << " chances left." << endl;
+                    }
+                }
+            }
         }
     }
 
     return 0;
 }
-

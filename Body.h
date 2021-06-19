@@ -7,8 +7,8 @@
 
 using namespace std;
 
-static int MAX_PARTS = 6;
-static int NO_PARTS = 0;
+enum CONDITIONS { DEAD, ONE_PART, TWO_PARTS,
+  THREE_PARTS, FOUR_PARTS, FIVE_PARTS, UNHARMED, FREED };
 
 /**
  * This class represents the body in a game of Hangman.
@@ -16,8 +16,7 @@ static int NO_PARTS = 0;
 class Body
 {
  private:
-  int _numParts;
-  bool _hasParts;
+  int _condition;
 
  public:
   /**
@@ -33,7 +32,12 @@ class Body
   /*
    * Removes an appendage from the body if there is one to remove.
    */
-  void removePart() ;
+  void removePart();
+
+  /**
+   * Free the hangman.
+   */
+  void setFree();
 
   /**
    * Returns true if this Body is deceased. This means there are no parts left
@@ -42,10 +46,22 @@ class Body
   bool isDead();
 
   /**
-   * Returns a visual depiction of this Body as a string accurately reflecting
-   * the number of parts it has currently.
+   * Restore Body to original condition.
    */
-  string getASCII();
+   void restoreBody();
+
+   /**
+    * Returns the condition of this Body.
+    *
+    * @return
+    */
+   int getCondition();
+
+  /**
+   * Prints a visual depiction of this Body that accurately reflects
+   * the condition it is in.
+   */
+  void displayASCII() const;
 };
 
 #endif //HANGMAN__BODY_H_
