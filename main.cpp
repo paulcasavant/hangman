@@ -77,8 +77,9 @@ int main()
                     }
                     else
                     {
-                        cout << "The prisoner has "
-                             << theGame->condition() << " chances left." << endl;
+                        cout << "Oops! The prisoner now has "
+                             << theGame->condition() << " body parts left."
+                             << endl;
                     }
                 }
             }

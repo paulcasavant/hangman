@@ -115,6 +115,7 @@ void Game::restartGame()
     }
 
     _theBody->restoreBody(); // Restore the body to its original condition
+    _attempted.clear(); // Clear record of attempted guesses
     displayBody(); // Display the updated representation of the body
     displayState(); // Display the updated state of the game
 }
