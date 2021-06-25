@@ -7,11 +7,13 @@
 
 using namespace std;
 
-enum CONDITIONS { DEAD, ONE_PART, TWO_PARTS,
-  THREE_PARTS, FOUR_PARTS, FIVE_PARTS, UNHARMED, FREED };
+enum STATUS { DEAD, SIX_PARTS, FIVE_PARTS,
+    FOUR_PARTS, THREE_PARTS, TWO_PARTS, ONE_PART, ZERO_PARTS, FREE };
 
 /**
- * This class represents the body in a game of Hangman.
+ * This class represents the hangman's body in the game of Hangman.
+ *
+ * @author Paul Casavant
  */
 class Body
 {
@@ -43,19 +45,19 @@ class Body
    * Returns true if this Body is deceased. This means there are no parts left
    * @return
    */
-  bool isDead();
+  bool isDead() const;
 
   /**
    * Restore Body to original condition.
    */
-   void restoreBody();
+   void reset();
 
    /**
     * Returns the condition of this Body.
     *
     * @return
     */
-   int getCondition();
+   int getCondition() const;
 
   /**
    * Prints a visual depiction of this Body that accurately reflects

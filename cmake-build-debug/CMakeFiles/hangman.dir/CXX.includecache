@@ -6,10 +6,6 @@
 
 #IncludeRegexTransform: 
 
-/Users/paulcasavant/repos/hangman/Body.cpp
-Body.h
-/Users/paulcasavant/repos/hangman/Body.h
-
 /Users/paulcasavant/repos/hangman/Body.h
 string
 -
@@ -17,4 +13,32 @@ iostream
 -
 vector
 -
+
+/Users/paulcasavant/repos/hangman/Game.cpp
+Game.h
+/Users/paulcasavant/repos/hangman/Game.h
+
+/Users/paulcasavant/repos/hangman/Game.h
+string
+-
+fstream
+-
+regex
+-
+iostream
+-
+vector
+-
+cstdlib
+-
+iostream
+-
+thread
+-
+unordered_set
+-
+chrono
+-
+Body.h
+/Users/paulcasavant/repos/hangman/Body.h
 

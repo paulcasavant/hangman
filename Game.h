@@ -6,27 +6,46 @@
 
 #include <string>
 #include <fstream>
+#include <regex>
 #include <iostream>
 #include <vector>
+#include <cstdlib>
+#include <iostream>
+#include <thread>
 #include <unordered_set>
+#include <chrono>
 #include "Body.h"
 
 using namespace std;
+using std::this_thread::sleep_for;
 
 static const string FILE_PATH = "/Users/paulcasavant/repos/hangman/wordlist.txt";
+static const string NUM_ONE = "1";
+static const string NUM_TWO = "2";
+static const string QUESTION_MARK = "?";
+static const int DELAY = 550;
+static const int LONG_DELAY = 1500;
+
+enum STATES { START, INPUT, INPUT_SWITCH, USAGE,
+    RESTART, QUIT, GUESS, CONCLUSION, VALIDATE_INPUT};
 
 /**
- * This class represents a Game of hangman.
+ * This class is a game of Hangman complete with ASCII art.
+ *
+ * @author Paul Casavant
  */
 class Game
 {
  private:
   Body *_theBody;
-  string _currentWord;
-  bool _victory;
+  string _word;
+  string _buffer;
+  bool _quit;
+  int _numGuessed;
   vector<string> _dict;
-  vector<bool> _guessed; // Parallel to word string; tracks guessed indices
   unordered_set<char> _attempted; // Records all attempted character guesses
+  vector<bool> _guessed; // Parallel to word string; tracks guessed indices
+  STATES _state;
 
  public:
   /**
@@ -39,30 +58,36 @@ class Game
    */
   ~Game();
 
+
+  /**
+   * Clears the console screen on both Windows and POSIX systems.
+   */
+  static void clearScreen();
+
+  /**
+   * Runs the game.
+   *
+   * @return true if the game should keep running
+   */
+  bool run();
+
   /**
    * Reads the dictionary file into the game program.
    */
   void readDictionary();
 
   /**
-   * Returns a random word from given dictionary and sets it as the current
+   * Returns a random word from the dictionary and sets it as the current
    * word.
    */
-  void randomizeWord();
+  string randomizeWord();
 
   /**
-   * Returns the current word.
-   *
-   * @return the current word.
-   */
-  string getCurrentWord();
-
-  /**
-   * Checks the specified character against the word and updates the guessed
-   * vector where any matches are found.
+   * Checks the specified character against the word and returns true if the
+   * guess matched any part of the word. Records correct guesses.
    *
    * @param input the specified character
-   * @return true if the guess has not been previously attempted
+   * @return true if the guess was a match
    */
   bool guess(char input);
 
@@ -72,7 +97,7 @@ class Game
    *
    * @return true if the game has been won
    */
-  bool victory();
+  bool victory() const;
 
   /**
    * True if this Game has been lost.
@@ -88,7 +113,7 @@ class Game
     */
    int condition();
 
-  void restartGame();
+  void restart();
 
   /**
    * Displays a visual representation of the body.
@@ -107,6 +132,7 @@ class Game
    * Display the title screen of the game.
    */
   void displayTitle();
+
 };
 
 #endif //HANGMAN__GAME_H_

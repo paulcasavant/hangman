@@ -5539,7 +5539,7 @@ rummage
 rumor
 runaround
 rundown
-runner
+run
 running
 runny
 runt
