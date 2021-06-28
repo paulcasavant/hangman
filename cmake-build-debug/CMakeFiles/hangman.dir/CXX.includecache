@@ -6,6 +6,10 @@
 
 #IncludeRegexTransform: 
 
+/Users/paulcasavant/repos/hangman/Body.cpp
+Body.h
+/Users/paulcasavant/repos/hangman/Body.h
+
 /Users/paulcasavant/repos/hangman/Body.h
 string
 -
@@ -41,4 +45,8 @@ chrono
 -
 Body.h
 /Users/paulcasavant/repos/hangman/Body.h
+
+/Users/paulcasavant/repos/hangman/main.cpp
+Game.h
+/Users/paulcasavant/repos/hangman/Game.h
 
