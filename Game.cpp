@@ -189,7 +189,6 @@ void Game::readDictionary()
     string fileBuffer;
     ifstream aFile(FILE_PATH);
 
-
     if (aFile.is_open())
     {
         while (getline(aFile, fileBuffer))

@@ -19,7 +19,7 @@
 using namespace std;
 using std::this_thread::sleep_for;
 
-static const string FILE_PATH = "/Users/paulcasavant/repos/hangman/wordlist.txt";
+static const string FILE_PATH = "./wordlist.txt";
 static const string NUM_ONE = "1";
 static const string NUM_TWO = "2";
 static const string QUESTION_MARK = "?";
