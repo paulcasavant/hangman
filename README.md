@@ -1,3 +1,3 @@
 # hangman
 
-A simple game with ASCII art.
+A simple Hangman game with ASCII art. Use `make` to compile.
