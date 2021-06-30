@@ -44,3 +44,11 @@ chrono
 Body.h
 /Users/paulcasavant/repos/hangman/Body.h
 
+/Users/paulcasavant/repos/hangman/main.cpp
+Game.h
+/Users/paulcasavant/repos/hangman/Game.h
+string
+-
+iostream
+-
+

@@ -1,4 +1,6 @@
 #include "Game.h"
+#include <string>
+#include <iostream>
 
 /**
  * The driver for the game.

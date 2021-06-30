@@ -6,7 +6,7 @@ Game::Game()
 
     _theBody = new Body(); // Init the body
     _quit = false; // Don't quit initially
-    _state = START; // Start state initially
+    _state = TITLE_SCREEN; // Start game at title screen
     _word = "";
     _numGuessed = 0;
     _maxWordLength = 0;
@@ -25,111 +25,154 @@ void Game::clearScreen()
 
 bool Game::run()
 {
+    string responseBuffer;
+
     switch(_state)
     {
-        // Start state
-        case START:
-            displayTitle();
-            cout << "\n\n Press ENTER to continue... ";
-            getline(cin, _buffer);
+        // Display the title screen of the game
+        case TITLE_SCREEN:
             clearScreen();
-            displayTitle();
-            cout << "\n\n Enter Maximum Word Length [3-9]: ";
+            cout << TITLE;
+            cout << " Press ENTER to continue... ";
+            getline(cin, _buffer);
+            _state = SET_LENGTH;
+            break;
+        case SET_LENGTH:
+            clearScreen();
+            cout << TITLE;
+            cout << " Enter Maximum Word Length [3-9]: ";
             getline(cin, _buffer);
 
             while (!regex_match (_buffer, regex("[3-9]")))
             {
-                cout << "Please enter a valid number." << endl;
+                cout << " Please enter a valid number." << endl;
                 sleep_for(chrono::milliseconds(DELAY));
                 clearScreen();
-                displayTitle();
-                cout << "\n\n Enter Maximum Word Length [3-9]: ";
+                cout << TITLE;
+                cout << " Enter Maximum Word Length [3-9]: ";
                 getline(cin, _buffer);
             }
 
             _maxWordLength = stoi(_buffer); // Set max word length for game
-            _word = getRandomWord();
+            _state = INIT;
+            break;
+        // Finish initializing game after word length set by user
+        case INIT:
+            _word = getRandomWord(); // Must set word length before this call
 
-            /* Init the guessed with the same number of FALSE booleans as the
-             * length of the current word. */
-            for (int i = 0; i < _word.length(); i++)
+            while (_guessed.size() < _word.length())
             {
                 _guessed.push_back(false);
             }
 
-            cout << " The prisoner has "
-                    << condition() << " chances." << endl;
-            sleep_for(chrono::milliseconds(DELAY));
-            _state = GET_INPUT;
+            _state = WIN_OR_LOSS;
+            break;
+        // Check if game won or lost before getting input
+        case WIN_OR_LOSS:
+            if (loss() || victory())
+            {
+                _state = EPILOGUE;
+            }
+            else
+            {
+                _state = GET_INPUT;
+            }
             break;
         // Input state
         case GET_INPUT:
-            // If the game has been won or lost, go to the conclusion state
-            if (loss() || victory())
-            {
-                _state = CONCLUSION;
-            }
-            else
-            {
-                clearScreen();
-                displayBody();
-                displayState();
-                cout << "\n Guess: ";
-                getline(cin, _buffer);
-                transform(_buffer.begin(), _buffer.end(), _buffer.begin(),::tolower);
-                _state = VALIDATE_INPUT;
-            }
+            clearScreen();
+            displayBody();
+            displayState();
+            cout << "\n Guess: ";
+            getline(cin, _buffer);
+            transform(_buffer.begin(), _buffer.end(), _buffer.begin(),::tolower);
+            _state = VALIDATE_INPUT;
             break;
         // Check that input conforms to requirements
         case VALIDATE_INPUT:
-            if (regex_match (_buffer, regex("[A-Za-z1-2?]")))
+            if (regex_match (_buffer, regex(REGEX_VALID_CHARS)))
             {
-                _state = INPUT_SWITCH;
+                _state = CHAR_INPUT;
+            }
+            else if (regex_match (_buffer, regex(REGEX_WORD)))
+            {
+                _state = WORD_INPUT;
             }
             else
             {
-                cout << " Error: Invalid input." << endl;
+                cout << INPUT_ERROR << endl;
                 sleep_for(chrono::milliseconds(DELAY));
                 _state = GET_INPUT;
             }
             break;
-        // Determine next state based on input
-        case INPUT_SWITCH:
+        // Handle input of a single character
+        case CHAR_INPUT:
             // Usage statement
             if (_buffer == QUESTION_MARK)
             {
                 _state = USAGE;
             }
             // Restart the game
-            else if (_buffer == NUM_ONE)
+            else if (_buffer == STR_ONE)
             {
                 _state = RESTART;
             }
             // Quit the game
-            else if (_buffer == NUM_TWO)
+            else if (_buffer == STR_TWO)
             {
                 _state = QUIT;
             }
             // Play the game
             else
             {
-                _state = CHECK;
+                _state = VALIDATE;
             }
             break;
+        // Handle input of an entire word
+        case WORD_INPUT:
+        {
+            string response;
+            cout << " Continue? [y/n]?: ";
+            getline(cin, response);
+
+            if (regex_match (response, regex(REGEX_YES)))
+            {
+                /*
+                 * Trim periods, commas, slashes, spaces, newlines, and tabs
+                 * from beginning and end of word
+                 */
+                _buffer.erase(0, _buffer.find_first_not_of(IGNORED_CHARS));
+                _buffer.erase(_buffer.find_last_not_of(IGNORED_CHARS) + 1);
+
+                // If the input buffer is the same as the current word
+                if (_buffer == _word)
+                {
+                    _numGuessed = _word.length();
+                }
+            }
+            else if (!regex_match (response, regex(REGEX_NO)))
+            {
+                cout << INPUT_ERROR << endl;
+                sleep_for(chrono::milliseconds(DELAY));
+            }
+
+            _state = WIN_OR_LOSS;
+            break;
+        }
         // Print usage statement
         case USAGE:
-            cout << " Usage:\n"
-                    "     a-z: Play\n"
-                    "     1: Restart\n"
-                    "     2: Quit" << endl;
-            sleep_for(chrono::milliseconds(LONG_DELAY));
+            clearScreen();
+            cout << TITLE;
+            cout << " Press ENTER to return... ";
+            getline(cin, _buffer);
+            _state = GET_INPUT;
             break;
         // Restart the game
         case RESTART:
             cout << " You have started a new game." << endl;
             sleep_for(chrono::milliseconds(DELAY));
             restart(); // Reset game state
-            _state = GET_INPUT;
+            _state = WIN_OR_LOSS;
             break;
         // Terminate the game
         case QUIT:
@@ -138,7 +181,7 @@ bool Game::run()
             cout << " Thanks for playing!" << endl;
             break;
         // Attempt to match the given guess
-        case CHECK:
+        case VALIDATE:
             // If the guess has been previously attempted, print a message
             if ((_attempted.find(_buffer[0]) != _attempted.end()))
             {
@@ -148,14 +191,14 @@ bool Game::run()
             // Else if the guess was correct, print success message
             else if (guess(_buffer[0]))
             {
-                cout << "Good job!" << endl;
+                cout << " Nice job!" << endl;
                 sleep_for(chrono::milliseconds(DELAY));
             }
             // Otherwise, print failure message
             else
             {
                 // If condition is one, refer to "part" in the singular
-                if (condition() == 1)
+                if (condition() == ONE)
                 {
                     cout << " Oops! The prisoner has "
                          << condition() << " chances left." << endl;
@@ -170,17 +213,17 @@ bool Game::run()
             }
 
             _attempted.insert(_buffer[0]); // Record the guess
-            _state = GET_INPUT;
+            _state = WIN_OR_LOSS;
             break;
         // Print loss or victory message and provide option to quit or restart
-        case CONCLUSION:
+        case EPILOGUE:
             clearScreen();
+            transform(_word.begin(), _word.end(), _word.begin(), ::toupper);
 
             // If the game was lost, print defeat message
             if (loss())
             {
                 displayBody();
-                transform(_word.begin(), _word.end(), _word.begin(), ::toupper);
                 cout << " The prisoner has died! The secret word was "
                 << _word << "." << endl;
             }
@@ -189,7 +232,8 @@ bool Game::run()
             {
                 _theBody->setFree(); // Display ASCII art of freed hangman
                 displayBody();
-                cout << " Congratulations. You have won!" << endl;
+                cout << " You have won! The secret word was "
+                << _word << "." << endl;
             }
 
             cout << " 1: Restart\n"
@@ -222,7 +266,7 @@ void Game::readDictionary()
 
 string Game::getRandomWord()
 {
-    srand(time(nullptr)); // Set random generator seed with max
+    //srand(time(nullptr)); // Set random generator seed with max // todo:
     return _dict.at(rand() % _lengthIndex[_maxWordLength] + 1); // Random bounded by max size
 }
 
@@ -268,10 +312,10 @@ int Game::condition()
 
 void Game::restart()
 {
-    int lengthDiff = 0; // Difference between length of _word and _guessed
-
-    /* Set the elements of the guessed vector to FALSE relative to the length
-     * of the current word */
+    /*
+     * Set the elements of the guessed vector to FALSE relative to the length
+     * of the current word.
+     */
     for (int i = 0; i < _word.length(); i++)
     {
         _guessed.at(i) = false;
@@ -279,16 +323,13 @@ void Game::restart()
 
     _word = getRandomWord(); // Assign a new random word
 
-    /* If the new word is longer than the previous largest word, grow the
-     * vector to size by pushing additional FALSE booleans */
-    if (_word.length() > _guessed.size())
+    /*
+     * If the new word is longer than the previous largest word, grow the
+     * vector to size by pushing additional FALSE booleans.
+     */
+    while (_word.length() > _guessed.size())
     {
-        lengthDiff = (int) (_word.length() - _guessed.size());
-
-        for (int i = 0; i < lengthDiff; i++)
-        {
-            _guessed.push_back(false);
-        }
+        _guessed.push_back(false);
     }
 
     _numGuessed = 0;
@@ -330,29 +371,3 @@ void Game::displayBody()
 {
     _theBody->displayASCII();
 }
-
-void Game::displayTitle()
-{
-    Game::clearScreen(); // Clear the screen
-
-    cout << " $$\\   $$\\\n"
-    " $$ |  $$ |\n"
-    " $$ |  $$ | $$$$$$\\  $$$$$$$\\   $$$$$$\\  $$$$$$\\$$$$\\   $$$$$$\\  $$$$$$$\\  \n"
-    " $$$$$$$$ | \\____$$\\ $$  __$$\\ $$  __$$\\ $$  _$$  _$$\\  \\____$$\\ $$  __$$\\ \n"
-    " $$$$$$$$ | \\____$$\\ $$  __$$\\ $$  __$$\\ $$  _$$  _$$\\  \\____$$\\ $$  __$$\\ \n"
-    " $$  __$$ | $$$$$$$ |$$ |  $$ |$$ /  $$ |$$ / $$ / $$ | $$$$$$$ |$$ |  $$ |\n"
-    " $$ |  $$ |$$  __$$ |$$ |  $$ |$$ |  $$ |$$ | $$ | $$ |$$  __$$ |$$ |  $$ |\n"
-    " $$ |  $$ |\\$$$$$$$ |$$ |  $$ |\\$$$$$$$ |$$ | $$ | $$ |\\$$$$$$$ |$$ |  $$ |\n"
-    " \\__|  \\__| \\_______|\\__|  \\__| \\____$$ |\\__| \\__| \\__|\\_______|\\__|  \\__|\n"
-    "                               $$\\   $$ |\n"
-    " Usage:                        \\$$$$$$  |   by Paul Casavant\n"
-    "     a-z: Play                  \\______/ \n"
-    "     1: Restart\n"
-    "     2: Quit" << endl;
-}
-
-
-
-
-
-

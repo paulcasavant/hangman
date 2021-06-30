@@ -20,15 +20,37 @@
 using namespace std;
 using std::this_thread::sleep_for;
 
+static const string TITLE =
+        " $$\\   $$\\\n"
+        " $$ |  $$ |\n"
+        " $$ |  $$ | $$$$$$\\  $$$$$$$\\   $$$$$$\\  $$$$$$\\$$$$\\   $$$$$$\\  $$$$$$$\\  \n"
+        " $$$$$$$$ | \\____$$\\ $$  __$$\\ $$  __$$\\ $$  _$$  _$$\\  \\____$$\\ $$  __$$\\ \n"
+        " $$$$$$$$ | \\____$$\\ $$  __$$\\ $$  __$$\\ $$  _$$  _$$\\  \\____$$\\ $$  __$$\\ \n"
+        " $$  __$$ | $$$$$$$ |$$ |  $$ |$$ /  $$ |$$ / $$ / $$ | $$$$$$$ |$$ |  $$ |\n"
+        " $$ |  $$ |$$  __$$ |$$ |  $$ |$$ |  $$ |$$ | $$ | $$ |$$  __$$ |$$ |  $$ |\n"
+        " $$ |  $$ |\\$$$$$$$ |$$ |  $$ |\\$$$$$$$ |$$ | $$ | $$ |\\$$$$$$$ |$$ |  $$ |\n"
+        " \\__|  \\__| \\_______|\\__|  \\__| \\____$$ |\\__| \\__| \\__|\\_______|\\__|  \\__|\n"
+        "                               $$\\   $$ |\n"
+        " Usage:                        \\$$$$$$  |   by Paul Casavant\n"
+        "   - a-z: Play                  \\______/ \n"
+        "   - 1: Restart\n"
+        "   - 2: Quit\n"
+        "   - Enter the entire word at any time.\n\n";
 static const string FILE_PATH = "./wordlist.txt"; // File lines sorted by length
-static const string NUM_ONE = "1";
-static const string NUM_TWO = "2";
+static const string INPUT_ERROR = " Error: Invalid input.";
+static const string REGEX_YES = "[yY]|[yY][eE][sS]";
+static const string REGEX_NO = "[nN]|[nN][oO]";
+static const string REGEX_WORD ="[a-zA-Z]{2,}";
+static const string REGEX_VALID_CHARS = "[a-zA-Z1-2?]";
+static const string IGNORED_CHARS = ".,/ \n\t";
+static const string STR_ONE = "1";
+static const string STR_TWO = "2";
 static const string QUESTION_MARK = "?";
 static const int DELAY = 550;
-static const int LONG_DELAY = 1500;
+static const int ONE = 1;
 
-enum STATES { START, GET_INPUT, INPUT_SWITCH, USAGE,
-    RESTART, QUIT, CHECK, CONCLUSION, VALIDATE_INPUT};
+enum STATES { TITLE_SCREEN, INIT, SET_LENGTH, WIN_OR_LOSS, GET_INPUT, CHAR_INPUT,
+    WORD_INPUT, USAGE, RESTART, QUIT, VALIDATE, EPILOGUE, VALIDATE_INPUT};
 
 /**
  * This class is a game of Hangman complete with ASCII art.
@@ -128,12 +150,6 @@ class Game
    * If a blanks is not printed, win condition flag is set TRUE.
    */
   void displayState();
-
-  /**
-   * Display the title screen of the game.
-   */
-  void displayTitle();
-
 };
 
 #endif //HANGMAN__GAME_H_
