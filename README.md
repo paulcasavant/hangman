@@ -1,6 +1,6 @@
 # hangman
 
-A simple Hangman game that displays using ASCII art. I wrote this as a relaxing side project. Use `make` to compile.
+A simple command line Hangman game that displays using ASCII art. I wrote this as a relaxing side project. Use `make` to compile.
 
 **Usage:**
   - <kbd>a</kbd> - <kbd>z</kbd> : Play  
