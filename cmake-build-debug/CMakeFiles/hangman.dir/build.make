@@ -90,22 +90,9 @@ CMakeFiles/hangman.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/hangman.dir/main.cpp.s"
 	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/paulcasavant/repos/hangman/main.cpp -o CMakeFiles/hangman.dir/main.cpp.s
 
-CMakeFiles/hangman.dir/Body.cpp.o: CMakeFiles/hangman.dir/flags.make
-CMakeFiles/hangman.dir/Body.cpp.o: ../Body.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/paulcasavant/repos/hangman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/hangman.dir/Body.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/hangman.dir/Body.cpp.o -c /Users/paulcasavant/repos/hangman/Body.cpp
-
-CMakeFiles/hangman.dir/Body.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/hangman.dir/Body.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/paulcasavant/repos/hangman/Body.cpp > CMakeFiles/hangman.dir/Body.cpp.i
-
-CMakeFiles/hangman.dir/Body.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/hangman.dir/Body.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/paulcasavant/repos/hangman/Body.cpp -o CMakeFiles/hangman.dir/Body.cpp.s
-
 CMakeFiles/hangman.dir/Game.cpp.o: CMakeFiles/hangman.dir/flags.make
 CMakeFiles/hangman.dir/Game.cpp.o: ../Game.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/paulcasavant/repos/hangman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/hangman.dir/Game.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/paulcasavant/repos/hangman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/hangman.dir/Game.cpp.o"
 	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/hangman.dir/Game.cpp.o -c /Users/paulcasavant/repos/hangman/Game.cpp
 
 CMakeFiles/hangman.dir/Game.cpp.i: cmake_force
@@ -116,18 +103,31 @@ CMakeFiles/hangman.dir/Game.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/hangman.dir/Game.cpp.s"
 	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/paulcasavant/repos/hangman/Game.cpp -o CMakeFiles/hangman.dir/Game.cpp.s
 
+CMakeFiles/hangman.dir/Body.cpp.o: CMakeFiles/hangman.dir/flags.make
+CMakeFiles/hangman.dir/Body.cpp.o: ../Body.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/paulcasavant/repos/hangman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/hangman.dir/Body.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/hangman.dir/Body.cpp.o -c /Users/paulcasavant/repos/hangman/Body.cpp
+
+CMakeFiles/hangman.dir/Body.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/hangman.dir/Body.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/paulcasavant/repos/hangman/Body.cpp > CMakeFiles/hangman.dir/Body.cpp.i
+
+CMakeFiles/hangman.dir/Body.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/hangman.dir/Body.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/paulcasavant/repos/hangman/Body.cpp -o CMakeFiles/hangman.dir/Body.cpp.s
+
 # Object files for target hangman
 hangman_OBJECTS = \
 "CMakeFiles/hangman.dir/main.cpp.o" \
-"CMakeFiles/hangman.dir/Body.cpp.o" \
-"CMakeFiles/hangman.dir/Game.cpp.o"
+"CMakeFiles/hangman.dir/Game.cpp.o" \
+"CMakeFiles/hangman.dir/Body.cpp.o"
 
 # External object files for target hangman
 hangman_EXTERNAL_OBJECTS =
 
 hangman: CMakeFiles/hangman.dir/main.cpp.o
-hangman: CMakeFiles/hangman.dir/Body.cpp.o
 hangman: CMakeFiles/hangman.dir/Game.cpp.o
+hangman: CMakeFiles/hangman.dir/Body.cpp.o
 hangman: CMakeFiles/hangman.dir/build.make
 hangman: CMakeFiles/hangman.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/paulcasavant/repos/hangman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable hangman"

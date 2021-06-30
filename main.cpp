@@ -2,14 +2,15 @@
 
 /**
  * The driver for the game.
+ *
+ * @return EXIT_SUCCESS
  */
 int main()
 {
     Game *theGame = new Game(); // Init the game
 
-    // Keep running until run() returns FALSE due to command termination.
-    while (theGame->run()){ }
+    // Keep running until run() returns FALSE due to program termination
+    while (theGame->run()){}
 
-    return 0;
+    return EXIT_SUCCESS;
 }
-

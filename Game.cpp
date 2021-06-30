@@ -7,15 +7,9 @@ Game::Game()
     _theBody = new Body(); // Init the body
     _quit = false; // Don't quit initially
     _state = START; // Start state initially
-    _word = randomizeWord();
+    _word = "";
     _numGuessed = 0;
-
-    /* Init the guessed with the same number of FALSE booleans as the length
-     * of the current word. */
-    for (int i = 0; i < _word.length(); i++)
-    {
-        _guessed.push_back(false);
-    }
+    _maxWordLength = 0;
 }
 
 void Game::clearScreen()
@@ -36,15 +30,40 @@ bool Game::run()
         // Start state
         case START:
             displayTitle();
-            cout << "\n Press ENTER to continue... ";
+            cout << "\n\n Press ENTER to continue... ";
             getline(cin, _buffer);
-            cout << "\n The prisoner has "
+            clearScreen();
+            displayTitle();
+            cout << "\n\n Enter Maximum Word Length [3-9]: ";
+            getline(cin, _buffer);
+
+            while (!regex_match (_buffer, regex("[3-9]")))
+            {
+                cout << "Please enter a valid number." << endl;
+                sleep_for(chrono::milliseconds(DELAY));
+                clearScreen();
+                displayTitle();
+                cout << "\n\n Enter Maximum Word Length [3-9]: ";
+                getline(cin, _buffer);
+            }
+
+            _maxWordLength = stoi(_buffer); // Set max word length for game
+            _word = getRandomWord();
+
+            /* Init the guessed with the same number of FALSE booleans as the
+             * length of the current word. */
+            for (int i = 0; i < _word.length(); i++)
+            {
+                _guessed.push_back(false);
+            }
+
+            cout << " The prisoner has "
                     << condition() << " chances." << endl;
             sleep_for(chrono::milliseconds(DELAY));
-            _state = INPUT;
+            _state = GET_INPUT;
             break;
         // Input state
-        case INPUT:
+        case GET_INPUT:
             // If the game has been won or lost, go to the conclusion state
             if (loss() || victory())
             {
@@ -71,7 +90,7 @@ bool Game::run()
             {
                 cout << " Error: Invalid input." << endl;
                 sleep_for(chrono::milliseconds(DELAY));
-                _state = INPUT;
+                _state = GET_INPUT;
             }
             break;
         // Determine next state based on input
@@ -94,7 +113,7 @@ bool Game::run()
             // Play the game
             else
             {
-                _state = GUESS;
+                _state = CHECK;
             }
             break;
         // Print usage statement
@@ -110,7 +129,7 @@ bool Game::run()
             cout << " You have started a new game." << endl;
             sleep_for(chrono::milliseconds(DELAY));
             restart(); // Reset game state
-            _state = INPUT;
+            _state = GET_INPUT;
             break;
         // Terminate the game
         case QUIT:
@@ -119,7 +138,7 @@ bool Game::run()
             cout << " Thanks for playing!" << endl;
             break;
         // Attempt to match the given guess
-        case GUESS:
+        case CHECK:
             // If the guess has been previously attempted, print a message
             if ((_attempted.find(_buffer[0]) != _attempted.end()))
             {
@@ -151,7 +170,7 @@ bool Game::run()
             }
 
             _attempted.insert(_buffer[0]); // Record the guess
-            _state = INPUT; // Go back to start
+            _state = GET_INPUT;
             break;
         // Print loss or victory message and provide option to quit or restart
         case CONCLUSION:
@@ -186,24 +205,25 @@ bool Game::run()
 
 void Game::readDictionary()
 {
-    string fileBuffer;
+    string wordBuffer;
     ifstream aFile(FILE_PATH);
 
     if (aFile.is_open())
     {
-        while (getline(aFile, fileBuffer))
+        while (getline(aFile, wordBuffer))
         {
-            _dict.push_back(fileBuffer);
+            _dict.push_back(wordBuffer);
+            _lengthIndex[wordBuffer.length()] = _dict.size() - 1;
         }
     }
 
     aFile.close();
 }
 
-string Game::randomizeWord()
+string Game::getRandomWord()
 {
-    srand(time(nullptr)); // Set random generator seed
-    return _dict.at(rand() % _dict.size() + 1);
+    srand(time(nullptr)); // Set random generator seed with max
+    return _dict.at(rand() % _lengthIndex[_maxWordLength] + 1); // Random bounded by max size
 }
 
 bool Game::guess(char input)
@@ -248,6 +268,8 @@ int Game::condition()
 
 void Game::restart()
 {
+    int lengthDiff = 0; // Difference between length of _word and _guessed
+
     /* Set the elements of the guessed vector to FALSE relative to the length
      * of the current word */
     for (int i = 0; i < _word.length(); i++)
@@ -255,13 +277,15 @@ void Game::restart()
         _guessed.at(i) = false;
     }
 
-    _word = randomizeWord(); // Assign a new random word
+    _word = getRandomWord(); // Assign a new random word
 
     /* If the new word is longer than the previous largest word, grow the
      * vector to size by pushing additional FALSE booleans */
     if (_word.length() > _guessed.size())
     {
-        for (int i = 0; i < (_word.length() - _guessed.size()); i++)
+        lengthDiff = (int) (_word.length() - _guessed.size());
+
+        for (int i = 0; i < lengthDiff; i++)
         {
             _guessed.push_back(false);
         }

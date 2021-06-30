@@ -13,21 +13,22 @@
 #include <iostream>
 #include <thread>
 #include <unordered_set>
+#include <unordered_map>
 #include <chrono>
 #include "Body.h"
 
 using namespace std;
 using std::this_thread::sleep_for;
 
-static const string FILE_PATH = "./wordlist.txt";
+static const string FILE_PATH = "./wordlist.txt"; // File lines sorted by length
 static const string NUM_ONE = "1";
 static const string NUM_TWO = "2";
 static const string QUESTION_MARK = "?";
 static const int DELAY = 550;
 static const int LONG_DELAY = 1500;
 
-enum STATES { START, INPUT, INPUT_SWITCH, USAGE,
-    RESTART, QUIT, GUESS, CONCLUSION, VALIDATE_INPUT};
+enum STATES { START, GET_INPUT, INPUT_SWITCH, USAGE,
+    RESTART, QUIT, CHECK, CONCLUSION, VALIDATE_INPUT};
 
 /**
  * This class is a game of Hangman complete with ASCII art.
@@ -42,10 +43,12 @@ class Game
   string _buffer;
   bool _quit;
   int _numGuessed;
-  vector<string> _dict;
+  int _maxWordLength;
   unordered_set<char> _attempted; // Records all attempted character guesses
   vector<bool> _guessed; // Parallel to word string; tracks guessed indices
   STATES _state;
+  unordered_map<int, int> _lengthIndex; // Map word len to starting dict index
+  vector<string> _dict;
 
  public:
   /**
@@ -57,7 +60,6 @@ class Game
    * Deconstructs a Game of hangman.
    */
   ~Game();
-
 
   /**
    * Clears the console screen on both Windows and POSIX systems.
@@ -80,7 +82,7 @@ class Game
    * Returns a random word from the dictionary and sets it as the current
    * word.
    */
-  string randomizeWord();
+  string getRandomWord();
 
   /**
    * Checks the specified character against the word and returns true if the
@@ -91,7 +93,6 @@ class Game
    */
   bool guess(char input);
 
-  // todo: need this?
   /**
    * True if this Game has been won.
    *
