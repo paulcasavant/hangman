@@ -50,7 +50,7 @@ static const int DELAY = 550;
 static const int ONE = 1;
 
 enum STATES { TITLE_SCREEN, INIT, SET_LENGTH, WIN_OR_LOSS, GET_INPUT, CHAR_INPUT,
-    WORD_INPUT, USAGE, RESTART, QUIT, VALIDATE, EPILOGUE, VALIDATE_INPUT};
+    WORD_INPUT, USAGE, RESTART, QUIT, CHECK_GUESS, EPILOGUE, VALIDATE_INPUT};
 
 /**
  * This class is a game of Hangman complete with ASCII art.

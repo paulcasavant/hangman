@@ -3,6 +3,7 @@
 Game::Game()
 {
     readDictionary(); // Read the input file into the Game dictionary
+    srand(time(nullptr)); // Set random number generator seed
 
     _theBody = new Body(); // Init the body
     _quit = false; // Don't quit initially
@@ -125,7 +126,7 @@ bool Game::run()
             // Play the game
             else
             {
-                _state = VALIDATE;
+                _state = CHECK_GUESS;
             }
             break;
         // Handle input of an entire word
@@ -180,8 +181,8 @@ bool Game::run()
             clearScreen();
             cout << " Thanks for playing!" << endl;
             break;
-        // Attempt to match the given guess
-        case VALIDATE:
+        // Attempt to match the guess the user entered
+        case CHECK_GUESS:
             // If the guess has been previously attempted, print a message
             if ((_attempted.find(_buffer[0]) != _attempted.end()))
             {
@@ -266,7 +267,6 @@ void Game::readDictionary()
 
 string Game::getRandomWord()
 {
-    //srand(time(nullptr)); // Set random generator seed with max // todo:
     return _dict.at(rand() % _lengthIndex[_maxWordLength] + 1); // Random bounded by max size
 }
 
@@ -359,12 +359,6 @@ void Game::displayState()
     }
 
     cout << endl;
-
-    // If there are no more blanks, set the body free
-    if (victory())
-    {
-        _theBody->setFree();
-    }
 }
 
 void Game::displayBody()
