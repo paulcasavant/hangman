@@ -16,7 +16,7 @@ Game::Game()
 void Game::clearScreen()
 {
     // If running Windows
-    #ifdef WINDOWS
+    #ifdef _WIN32
         system("CLS");
     // Otherwise, running POSIX
     #else
